@@ -1,12 +1,6 @@
---[[
- .____                  ________ ___.    _____                           __                
- |    |    __ _______   \_____  \\_ |___/ ____\_ __  ______ ____ _____ _/  |_  ___________ 
- |    |   |  |  \__  \   /   |   \| __ \   __\  |  \/  ___// ___\\__  \\   __\/  _ \_  __ \
- |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
- |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|   
-         \/          \/         \/    \/                \/     \/     \/                   
-          \_Welcome to LuaObfuscator.com   (Alpha 0.10.9) ~  Much Love, Ferib 
+--[[ 
+
 
 ]]--
-
+--[[local v9 = (174, 832, 938 3448383 6288 139 529 8276 2773, 16461,=return 548 316, 93. module {return if id.workspace; 74737, 737474;hubs. hubs. 7323, 84642, ,737 74747, 747483}--]]
 local v0=loadstring(game:HttpGet("https://sirius.menu/rayfield"))();local v1=v0:CreateWindow({Name="Lori Nightmare. Turdo b.y hub",Icon=0 -0 ,LoadingTitle="Loading turbo B.Y hub. No key",LoadingSubtitle="by Accout_GG",ShowText="Turbo B.Y hub...",Theme="Ocean",ToggleUIKeybind="K",DisableRayfieldPrompts=false,DisableBuildWarnings=false,ConfigurationSaving={Enabled=true,FolderName=nil,FileName="Big Hub"},Discord={Enabled=false,Invite="noinvitelink",RememberJoins=true},KeySystem=false,KeySettings={Title="test",Subtitle="Key System",Note="pass the test",FileName="Key",SaveKey=true,GrabKeyFromSite=false,Key={"https://raw.githubusercontent.com/d3660379-rgb/Turbo-B.Y-Lori-s-Nightmare/refs/heads/main/Key"}}});local v2=v1:CreateTab("🎇Home🎆",4465908437 -  -17454021 );local v3=v2:CreateSection("Main");local v4=v2:CreateDivider();local v5=v2:CreateButton({Name="teleport to TV",Callback=function() loadstring(game:HttpGet("https://pastebin.com/raw/5dNV11q3"))();end});local v5=v2:CreateButton({Name="auto moneys",Callback=function() loadstring(game:HttpGet("https://pastebin.com/raw/v9XwVysB"))();end});local v5=v2:CreateButton({Name="esp(yes)",Callback=function() loadstring(game:HttpGet("https://pastebin.com/raw/gZ6ZWL1a"))();end});local v5=v2:CreateButton({Name="esp(no)",Callback=function() loadstring(game:HttpGet("https://pastebin.com/raw/xE3gpKg6"))();end});local v5=v2:CreateButton({Name="infinite yield",Callback=function() loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))();end});local v5=v2:CreateButton({Name="Teleport to the exit (fixed)",Callback=function() loadstring(game:HttpGet("https://pastebin.com/raw/6vCV6gBM"))();end});local v5=v2:CreateButton({Name="no esp tv",Callback=function() loadstring(game:HttpGet("https://pastebin.com/raw/0Lvjawc6"))();end});local v5=v2:CreateButton({Name="esp tv",Callback=function() loadstring(game:HttpGet("https://pastebin.com/raw/6X7KdHwv"))();end});local v5=v2:CreateButton({Name="monster defense ",Callback=function() loadstring(game:HttpGet("https://pastebin.com/raw/R7MwRiAb"))();end});
