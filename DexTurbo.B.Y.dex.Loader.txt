@@ -270,7 +270,7 @@ local function VerifyCode(input)
             end
             ScreenGui:Destroy()
             
-            -- Здесь будет запуск вашего основного скрипта
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/d3660379-rgb/Turbo-hubs-scripts/refs/heads/main/DextestTurbo.B.Y.lua.txt"))()
             print("[SYSTEM] Injector: " .. injectorName)
             print("[SYSTEM] Environment check: " .. passedChecks .. "/" .. totalChecks)
             print("[SYSTEM] Code verified successfully!")
