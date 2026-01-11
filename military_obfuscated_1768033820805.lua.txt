@@ -1,0 +1,1751 @@
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+
+local Window = WindUI:CreateWindow({
+    Title = "Turbo b.y hub Lori's Nightmare 4.2.5 release",
+    Icon = "door-open", -- lucide icon. optional
+    Author = "by Testmy_roblox123", -- optional
+})
+
+
+
+local MainTab = Window:Tab({
+    Title = " Main",
+    Icon = "gamepad-2", -- optional
+    Locked = false,
+})
+
+local PlayerTab = Window:Tab({
+    Title = "Player",
+    Icon = "bot", -- optional
+    Locked = false,
+})
+
+local ExraTab = Window:Tab({
+    Title = "Extras",
+    Icon = "monitor-cog", -- optional
+    Locked = false,
+})
+
+local TVTab = Window:Tab({
+    Title = "TV ESP",
+    Icon = "monitor-cog", -- optional
+    Locked = false,
+})
+
+local BetaTab = Window:Tab({
+    Title = "Beta testing",
+    Icon = "joystick", -- optional
+    Locked = false,
+})
+
+local com = Window:Tab({
+    Title = "Coming soon!",
+    Icon = "banana", -- optional
+    Locked = true,
+})
+
+Window:Tag({
+    Title = "beta",
+    Icon = "github",
+    Color = Color3.fromHex("#30ff6a"),
+    Radius = 5, -- from 0 to 13
+})
+
+WindUI:Notify({
+    Title = "The hub is loaded! Ready to use!",
+    Content = "Notification Content!",
+    Duration = 3, -- 3 seconds
+    Icon = "bird",
+})
+
+
+WindUI:Popup({
+    Title = "warning",
+    Icon = "info",
+    Content = "Before using, you agree and read our license. Our product is not malicious. ",
+    Buttons = {
+        {
+            Title = "I don't agree",
+            Callback = function() 
+                -- ТВОЯ СТРОЧКА УНИЧТОЖЕНИ
+
+WindUI:Notify({Title = "Bye!", Content = "removing the hub..", Duration = 3, Icon = "check"})
+wait(5)
+                if Window and Window.Destroy then
+                    Window:Destroy()
+                end
+                
+            end,
+            Variant = "Tertiary",
+            
+        },
+        {
+            Title = "I understand ",
+            Icon = "arrow-right",
+            Callback = function() end,
+            Variant = "Primary",
+        }
+    }
+})
+
+
+
+--пример
+--[[
+local Toggle = Tab:Toggle({
+    Title = "Toggle",
+    Desc = "Toggle Description",
+    Icon = "bird",
+    Type = "Checkbox",
+    Value = false, -- default value
+    Callback = function(state) 
+        print("Toggle Activated" .. tostring(state))
+    end
+})
+
+local Button = Tab:Button({
+    Title = "Button",
+    Desc = "Test Button",
+    Locked = false,
+    Callback = function()
+        -- ...
+    end
+})
+
+--]]
+
+local soonay = Tab:Button({
+    Title = "auto farm",
+    Desc = "Test Button"    
+    Locked = true,
+    Callback = function()
+        print("Apparently you got around the system, but you're stupid.")
+    end
+})
+
+local b1 = MainTab:Button({
+    Title = "tp to TV(gui)",
+    Desc = "Test Button",
+    Locked = false,
+    Callback = function()
+        local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local StarterGui = game:GetService("StarterGui")
+local UserInputService = game:GetService("UserInputService")
+
+local LocalPlayer = Players.LocalPlayer
+local TELEPORT_KEY = Enum.KeyCode.C
+local NOTIFY_DURATION = 2
+local MAX_LOCATIONS = 12 
+
+local connections = {}
+
+local function notify(text)
+    pcall(function()
+        StarterGui:SetCore("SendNotification", {
+            Title = "teleport to TV",
+            Text = text,
+            Duration = NOTIFY_DURATION
+        })
+    end)
+end
+
+local function getTargetCFrame(obj)
+    if obj:IsA("BasePart") then
+        return obj.CFrame + Vector3.new(0, obj.Size.Y / 2 + 3, 0) 
+    end
+    return nil
+end
+
+-- === ФУНКЦИЯ ПОИСКА (ИЩЕТ С МАЛЕНЬКОЙ БУКВЫ) ===
+local function findAllLocations()
+    print("--- НАЧАЛО ПОИСКА ЛОКАЦИЙ (location1...) ---") 
+    local locations = {}
+    local descendants = Workspace:GetDescendants()
+    
+    for i = 1, MAX_LOCATIONS do
+        local targetName = "location" .. i 
+        local found = false
+        
+        for _, obj in ipairs(descendants) do
+             string.lower(),
+            if string.lower(obj.Name) == targetName and obj:IsA("BasePart") then
+                table.insert(locations, obj)
+         
+                found = true
+                break
+            end
+        end
+        
+        if not found then
+            print("I don't think so: " .. targetName)
+        end
+    end
+    
+    
+    return locations
+end
+
+local function getHRP()
+    local char = LocalPlayer.Character
+    if not char then return nil end
+    return char:FindFirstChild("HumanoidRootPart")
+end
+
+local function teleportToRandomLocation()
+    local hrp = getHRP()
+    if not hrp then
+        notify("character")
+        return
+    end
+
+    local locations = findAllLocations()
+    
+    if #locations == 0 then
+        notify("The map has been removed. We are waiting.")
+        warn("loading map location1...location12")
+        return
+    end
+    
+    local randomIndex = math.random(1, #locations)
+    local target = locations[randomIndex]
+
+    local targetCFrame = getTargetCFrame(target)
+    if targetCFrame then
+        hrp.CFrame = targetCFrame
+        notify("ТП к: " .. target.Name)
+    end
+end
+
+-- GUI (Остальная часть скрипта остается прежней)
+local playerGui = LocalPlayer:WaitForChild("PlayerGui")
+local oldGui = playerGui:FindFirstChild("TeleportPanel")
+if oldGui then oldGui:Destroy() end
+
+local screenGui = Instance.new("ScreenGui", playerGui)
+screenGui.Name = "TeleportPanel"
+screenGui.ResetOnSpawn = false
+
+local panel = Instance.new("Frame", screenGui)
+panel.Size = UDim2.new(0, 260, 0, 150)
+panel.Position = UDim2.new(0.5, -130, 0.5, -75)
+panel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+panel.BorderSizePixel = 2
+panel.Active = true
+
+-- Dragging (skipped for brevity)
+local dragging, dragInput, dragStart, startPos
+local function update(input)
+    local delta = input.Position - dragStart
+    panel.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+panel.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true; dragStart = input.Position; startPos = panel.Position
+        input.Changed:Connect(function() if input.UserInputState == Enum.UserInputState.End then dragging = false end end)
+    end
+end)
+panel.InputChanged:Connect(function(input)
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        dragInput = input
+    end
+end)
+table.insert(connections, UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then update(input) end
+end))
+
+-- UI Elements
+local title = Instance.new("TextLabel", panel)
+title.Size = UDim2.new(1,0,0.25,0); title.Text = "TV"; title.TextColor3 = Color3.fromRGB(0,255,255); title.Font = Enum.Font.FredokaOne; title.TextScaled = true; title.BackgroundTransparency = 1
+local button = Instance.new("TextButton", panel)
+button.Size = UDim2.new(0.8,0,0.25,0); button.Position = UDim2.new(0.1,0,0.3,0); button.BackgroundColor3 = Color3.fromRGB(0,180,0); button.Text = "teleport to TV"; button.TextColor3 = Color3.fromRGB(255,255,255); button.Font = Enum.Font.FredokaOne; button.TextScaled = true
+button.MouseButton1Click:Connect(teleportToRandomLocation)
+
+local destroyBtn = Instance.new("TextButton", panel)
+destroyBtn.Size = UDim2.new(0.8,0,0.2,0); destroyBtn.Position = UDim2.new(0.1,0,0.82,0); destroyBtn.BackgroundColor3 = Color3.fromRGB(80,80,80); destroyBtn.Text = "delete GUI"; destroyBtn.TextColor3 = Color3.fromRGB(255,80,80); destroyBtn.Font = Enum.Font.FredokaOne; destroyBtn.TextScaled = true
+
+table.insert(connections, UserInputService.InputBegan:Connect(function(input, gp)
+    if gp then return end
+    if input.KeyCode == TELEPORT_KEY then teleportToRandomLocation() end
+end))
+
+destroyBtn.MouseButton1Click:Connect(function()
+    for _, c in ipairs(connections) do c:Disconnect() end
+    screenGui:Destroy(); script:Destroy()
+end)
+
+--turbo.by.hub
+    end
+})
+
+
+local B2 = MainTab:Button({
+    Title = "Teleport to Exit",
+    Desc = "Test Button",
+    Locked = false,
+    Callback = function()
+        local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local StarterGui = game:GetService("StarterGui")
+
+local LocalPlayer = Players.LocalPlayer
+local NOTIFY_DURATION = 3
+
+-- !!! ИСПРАВЛЕННЫЙ ПУТЬ !!!
+local TARGET_PATH = "Misc.ExitPortal.Telepad" 
+
+-- Функция уведомления
+local function notify(text)
+    pcall(function()
+        StarterGui:SetCore("SendNotification", {
+            Title = "Телепорт",
+            Text = text,
+            Duration = NOTIFY_DURATION
+        })
+    end)
+end
+
+-- Функция поиска и телепортации
+local function teleportToTarget(targetPart)
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local hrp = char:FindFirstChild("HumanoidRootPart")
+    
+    if not hrp then
+        notify("character not found")
+        return
+    end
+
+    -- Вычисляем местоположение для телепортации (немного выше парта)
+    local targetCFrame = targetPart.CFrame + Vector3.new(0, targetPart.Size.Y / 2 + 3, 0)
+    
+    hrp.CFrame = targetCFrame
+    notify("successful TP: " .. targetPart.Name)
+    
+    -- Удаляем скрипт после выполнения телепортации
+    script:Destroy()
+end
+
+-- === ОСНОВНАЯ ЛОГИКА ===
+
+-- 1. Поиск парта по исправленному пути: ReplicatedStorage -> Misc -> ExitPortal -> Telepad
+local targetContainer = ReplicatedStorage
+local found = true
+
+-- Разделяем путь, чтобы ждать каждый объект по отдельности
+local pathSegments = string.split(TARGET_PATH, ".")
+
+for _, segment in ipairs(pathSegments) do
+    targetContainer = targetContainer:WaitForChild(segment, 10)
+    if not targetContainer then
+        found = false
+        break
+    end
+end
+
+if found and targetContainer:IsA("BasePart") then
+    print("✅ Target 'Telepad' найден. Ожидание персонажа...")
+    
+    -- 2. Ждем загрузки персонажа игрока
+    if LocalPlayer.Character then
+        teleportToTarget(targetContainer)
+    else
+        LocalPlayer.CharacterAdded:Once(function()
+            teleportToTarget(targetContainer)
+        end)
+    end
+else
+    -- 3. Ошибка, если парт не найден
+    notify("waiting for map to load")
+    warn(": Парт по пути ReplicatedStorage." .. TARGET_PATH .. " не найден.")
+    script:Destroy()
+end
+--turbo.b.y.hub
+    end
+})
+
+local Button = MainTab:Button({
+    Title = "collect coins(gui)",
+    Desc = "Test Button",
+    Locked = false,
+    Callback = function()
+        local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local StarterGui = game:GetService("StarterGui")
+local UserInputService = game:GetService("UserInputService")
+
+local LocalPlayer = Players.LocalPlayer
+local TELEPORT_KEY = Enum.KeyCode.C
+local NOTIFY_DURATION = 2
+
+-- Estado de conexión
+local connections = {}
+
+-- Función de notificación
+local function notify(text)
+    pcall(function()
+        StarterGui:SetCore("SendNotification", {
+            Title = "Teleport",
+            Text = text,
+            Duration = NOTIFY_DURATION
+        })
+    end)
+end
+
+-- Obtener CFrame de destino
+local function getTargetCFrame(obj)
+    if obj:IsA("BasePart") then
+        return obj.CFrame
+    elseif obj:IsA("Model") then
+        if obj.PrimaryPart then
+            return obj.PrimaryPart.CFrame
+        else
+            local parts = {}
+            for _, d in ipairs(obj:GetDescendants()) do
+                if d:IsA("BasePart") then
+                    table.insert(parts, d)
+                end
+            end
+            if #parts == 0 then return nil end
+            local sum = Vector3.new(0, 0, 0)
+            for _, p in ipairs(parts) do
+                sum += p.Position
+            end
+            return CFrame.new(sum / #parts)
+        end
+    end
+    return nil
+end
+
+-- Buscar Coins1
+local function findCoins1()
+    for _, inst in ipairs(Workspace:GetDescendants()) do
+        if inst.Name == "Coins1" then
+            if inst:IsA("BasePart") or inst:IsA("Model") then
+                return inst
+            end
+            local parent = inst.Parent
+            if parent and (parent:IsA("BasePart") or parent:IsA("Model")) then
+                return parent
+            end
+        end
+    end
+    return nil
+end
+
+-- Obtener HRP
+local function getHRP()
+    local char = LocalPlayer.Character
+    if not char then return nil end
+    return char:FindFirstChild("HumanoidRootPart")
+end
+
+-- Teletransportar
+local function teleportToCoins1Exact()
+    local hrp = getHRP()
+    if not hrp then
+        notify("No se detecta HumanoidRootPart")
+        return
+    end
+
+    local target = findCoins1()
+    if not target then
+        notify("No se encontró Coins1 en Workspace")
+        return
+    end
+
+    local targetCFrame = getTargetCFrame(target)
+    if not targetCFrame then
+        notify("No se pudo obtener posición de Coins1")
+        return
+    end
+
+    hrp.CFrame = targetCFrame
+    notify("Teletransportado a Coins1 (posición exacta)")
+end
+
+-- GUI flotante
+local screenGui = Instance.new("ScreenGui", LocalPlayer:WaitForChild("PlayerGui"))
+screenGui.Name = "TeleportPanel"
+screenGui.ResetOnSpawn = false
+
+local panel = Instance.new("Frame", screenGui)
+panel.Size = UDim2.new(0, 260, 0, 150)
+panel.Position = UDim2.new(0.5, -130, 0.5, -75)
+panel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+panel.BorderSizePixel = 2
+panel.Active = true
+
+-- Soporte táctil y mouse para mover
+local dragging = false
+local dragInput, dragStart, startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    panel.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+                               startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+panel.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or
+       input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = panel.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+panel.InputChanged:Connect(function(input)
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or
+                     input.UserInputType == Enum.UserInputType.Touch) then
+        dragInput = input
+    end
+end)
+
+table.insert(connections, UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        update(input)
+    end
+end))
+
+-- Título
+local title = Instance.new("TextLabel", panel)
+title.Size = UDim2.new(1, 0, 0.25, 0)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "COLLECT COINS"
+title.TextColor3 = Color3.fromRGB(255, 255, 0)
+title.Font = Enum.Font.FredokaOne
+title.TextScaled = true
+
+-- Botón rojo
+local button = Instance.new("TextButton", panel)
+button.Size = UDim2.new(0.8, 0, 0.25, 0)
+button.Position = UDim2.new(0.1, 0, 0.3, 0)
+button.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+button.Text = "Teleport to coin"
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.Font = Enum.Font.FredokaOne
+button.TextScaled = true
+
+button.MouseButton1Click:Connect(teleportToCoins1Exact)
+
+-- Texto azul
+local info = Instance.new("TextLabel", panel)
+info.Size = UDim2.new(1, 0, 0.2, 0)
+info.Position = UDim2.new(0, 0, 0.6, 0)
+info.BackgroundTransparency = 1
+info.Text = "or press key C to teleport to a coin"
+info.TextColor3 = Color3.fromRGB(0, 170, 255)
+info.Font = Enum.Font.FredokaOne
+info.TextScaled = true
+
+-- Botón de destrucción
+local destroyBtn = Instance.new("TextButton", panel)
+destroyBtn.Size = UDim2.new(0.8, 0, 0.2, 0)
+destroyBtn.Position = UDim2.new(0.1, 0, 0.82, 0)
+destroyBtn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+destroyBtn.Text = "Destroy script"
+destroyBtn.TextColor3 = Color3.fromRGB(255, 80, 80)
+destroyBtn.Font = Enum.Font.FredokaOne
+destroyBtn.TextScaled = true
+
+-- Tecla C
+table.insert(connections, UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.KeyCode == TELEPORT_KEY then
+        teleportToCoins1Exact()
+    end
+end))
+
+-- Destruir todo
+destroyBtn.MouseButton1Click:Connect(function()
+    for _, conn in ipairs(connections) do
+        if conn and conn.Disconnect then
+            conn:Disconnect()
+        end
+    end
+    screenGui:Destroy()
+    notify("Script destruido. Ya no está activo.")
+end)
+--turbo.b.y.hub
+    end
+})
+local Tb = false
+local T1 = MainTab:Toggle({
+    Title = "Players esp",
+    Desc = "Toggle Description",
+    Icon = "bird",
+    Type = "Checkbox",
+    Value = false, -- default value
+    Callback = function(state) 
+Tb = state
+        if state then
+         
+         -- ESP with Size Check (KILLER for bigger players)
+
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function getCharacterHeight(character)
+    -- Примерно измеряем высоту
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        return humanoid.HipHeight + humanoid.BodyHeightScale.Value * 2
+    end
+    return 0
+end
+
+local function createESP(character)
+    local head = character:FindFirstChild("Head")
+    if not head then return end
+
+    -- Удаление старого ESP
+    if character:FindFirstChild("RainbowESP") then
+        character.RainbowESP:Destroy()
+    end
+
+    -- Создание BillboardGui
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "RainbowESP"
+    billboard.Size = UDim2.new(4, 0, 4, 0)
+    billboard.AlwaysOnTop = true
+    billboard.Adornee = head
+    billboard.Parent = character
+
+    -- Сам квадрат (пустой внутри)
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(1, 0, 1, 0)
+    frame.BackgroundTransparency = 1
+    frame.BorderSizePixel = 0
+    frame.Parent = billboard
+
+    local stroke = Instance.new("UIStroke")
+    stroke.Thickness = 5
+    stroke.Parent = frame
+
+    -- Текст "KILLER" (пока скрыт)
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1,0,0.3,0)
+    label.Position = UDim2.new(0,0,-0.35,0)
+    label.BackgroundTransparency = 1
+    label.Text = ""
+    label.TextScaled = true
+    label.Font = Enum.Font.GothamBold
+    label.TextColor3 = Color3.new(1,0,0)
+    label.Parent = billboard
+
+    -- Проверяем размер персонажа
+    task.wait(0.2)
+
+    local myChar = LocalPlayer.Character
+    if not myChar then return end
+
+    local myHum = myChar:FindFirstChildOfClass("Humanoid")
+    local hum = character:FindFirstChildOfClass("Humanoid")
+
+    if not myHum or not hum then return end
+
+    -- Если игрок БОЛЬШЕ
+    if hum.HipHeight > myHum.HipHeight then
+        stroke.Color = Color3.new(1,0,0)
+        label.Text = "KILLER"
+
+    else
+        -- Радужная обводка
+        local hue = 0
+        RunService.RenderStepped:Connect(function()
+            hue = hue + 0.005
+            if hue > 1 then hue = 0 end
+            stroke.Color = Color3.fromHSV(hue, 1, 1)
+        end)
+    end
+end
+
+
+local function onPlayer(player)
+    if player == LocalPlayer then return end
+
+    player.CharacterAdded:Connect(function(char)
+        task.wait(0.5)
+        createESP(char)
+    end)
+
+    if player.Character then
+        createESP(player.Character)
+    end
+end
+
+for _, plr in pairs(Players:GetPlayers()) do
+    onPlayer(plr)
+end
+
+Players.PlayerAdded:Connect(onPlayer)
+--turbo.b.yhub
+else
+local Players = game:GetService("Players")
+
+for _, player in pairs(Players:GetPlayers()) do
+    if player.Character and player.Character:FindFirstChild("RainbowESP") then
+        player.Character.RainbowESP:Destroy()
+    end
+    
+    player.CharacterAdded:Connect(function(char)
+        if char:FindFirstChild("RainbowESP") then
+            char.RainbowESP:Destroy()
+        end
+    end)
+end
+
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(char)
+        if char:FindFirstChild("RainbowESP") then
+            char.RainbowESP:Destroy()
+        end
+    end)
+end)
+    end
+})
+
+
+--[[
+local Toggle = Tab:Toggle({
+    Title = "Toggle",
+    Desc = "Toggle Description",
+    Icon = "bird",
+    Type = "Checkbox",
+    Value = false, -- default value
+    Callback = function(state) 
+        print("Toggle Activated" .. tostring(state))
+    end
+})
+
+local Button = Tab:Button({
+    Title = "Button",
+    Desc = "Test Button",
+    Locked = false,
+    Callback = function()
+        -- ...
+    end
+})
+
+--]]
+
+
+local xd2 = Tab:Button({
+    Title = "nightmare defense",
+    Desc = "Test Button",
+    Locked = false,
+    Callback = function()
+        local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local StarterGui = game:GetService("StarterGui")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local LocalPlayer = Players.LocalPlayer
+
+-- ================= НАСТРОЙКИ =================
+local MAX_LOCATIONS = 12
+local WARNING_DISTANCE = 35
+local DANGER_DISTANCE = 20
+local WARNING_TEXT = "The monster's hitbox may not have time to trigger."
+local TARGET_TORSO_SIZE = Vector3.new(2.4000000953674316, 2.6000001430511475, 1.7999992370605469)
+local SIZE_TOLERANCE = 0.2
+
+-- ================= ПЕРЕМЕННЫЕ =================
+local teleportEnabled = false
+local active = true
+local connection = nil
+local warnGui = nil
+local controlGui = nil
+
+-- ================= ФУНКЦИЯ СОЗДАНИЯ КНОПОК В УГЛУ =================
+local function createControlGUI()
+    if controlGui then controlGui:Destroy() end
+    
+    controlGui = Instance.new("ScreenGui", LocalPlayer.PlayerGui)
+    controlGui.Name = "ControlGUI"
+    controlGui.ResetOnSpawn = false
+    controlGui.IgnoreGuiInset = true -- Учитываем безопасную зону
+    
+    -- Основной фрейм для кнопок (в правом верхнем углу)
+    local buttonFrame = Instance.new("Frame")
+    buttonFrame.Name = "ButtonFrame"
+    buttonFrame.Size = UDim2.new(0, 180, 0, 90)
+    buttonFrame.Position = UDim2.new(1, -190, 0, 10) -- Правый верхний угол
+    buttonFrame.BackgroundTransparency = 1 -- Прозрачный фон
+    buttonFrame.Parent = controlGui
+    
+    -- Кнопка включения/выключения телепорта
+    local teleportBtn = Instance.new("TextButton")
+    teleportBtn.Name = "TeleportToggle"
+    teleportBtn.Size = UDim2.new(1, 0, 0, 40)
+    teleportBtn.Position = UDim2.new(0, 0, 0, 0)
+    teleportBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    teleportBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    teleportBtn.Text = "Teleport: OFF"
+    teleportBtn.Font = Enum.Font.FredokaOne
+    teleportBtn.TextSize = 18
+    teleportBtn.Parent = buttonFrame
+    
+    local corner1 = Instance.new("UICorner", teleportBtn)
+    corner1.CornerRadius = UDim.new(0, 8)
+    
+    -- Кнопка удаления скрипта
+    local deleteBtn = Instance.new("TextButton")
+    deleteBtn.Name = "DeleteScript"
+    deleteBtn.Size = UDim2.new(1, 0, 0, 40)
+    deleteBtn.Position = UDim2.new(0, 0, 0, 50)
+    deleteBtn.BackgroundColor3 = Color3.fromRGB(200, 60, 60)
+    deleteBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    deleteBtn.Text = "DELETE SCRIPT"
+    deleteBtn.Font = Enum.Font.FredokaOne
+    deleteBtn.TextSize = 18
+    deleteBtn.Parent = buttonFrame
+    
+    local corner2 = Instance.new("UICorner", deleteBtn)
+    corner2.CornerRadius = UDim.new(0, 8)
+    
+    -- Обработчики кнопок
+    teleportBtn.MouseButton1Click:Connect(function()
+        teleportEnabled = not teleportEnabled
+        teleportBtn.Text = "Teleport: " .. (teleportEnabled and "ON" or "OFF")
+        teleportBtn.BackgroundColor3 = teleportEnabled and Color3.fromRGB(60, 180, 60) or Color3.fromRGB(60, 60, 60)
+        
+        StarterGui:SetCore("SendNotification", {
+            Title = "Teleport",
+            Text = "Teleport " .. (teleportEnabled and "enabled" or "disabled"),
+            Duration = 2
+        })
+    end)
+    
+    deleteBtn.MouseButton1Click:Connect(function()
+        active = false
+        
+        -- Отключаем все подключения
+        if connection then
+            connection:Disconnect()
+            connection = nil
+        end
+        
+        -- Удаляем GUI
+        if warnGui then
+            warnGui:Destroy()
+            warnGui = nil
+        end
+        
+        if controlGui then
+            controlGui:Destroy()
+            controlGui = nil
+        end
+        
+        StarterGui:SetCore("SendNotification", {
+            Title = "Script",
+            Text = "Script deleted! Restart to activate again.",
+            Duration = 4
+        })
+    end)
+    
+    -- Делаем кнопки драгабельными (перетаскиваемыми)
+    local dragToggle = nil
+    local dragInput = nil
+    local dragStart = nil
+    local startPos = nil
+    
+    local function updateInput(input)
+        local delta = input.Position - dragStart
+        buttonFrame.Position = UDim2.new(
+            startPos.X.Scale, 
+            startPos.X.Offset + delta.X,
+            startPos.Y.Scale, 
+            startPos.Y.Offset + delta.Y
+        )
+    end
+    
+    teleportBtn.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragToggle = true
+            dragStart = input.Position
+            startPos = buttonFrame.Position
+            
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragToggle = false
+                end
+            end)
+        end
+    end)
+    
+    teleportBtn.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            dragInput = input
+        end
+    end)
+    
+    UserInputService.InputChanged:Connect(function(input)
+        if dragToggle and input == dragInput then
+            updateInput(input)
+        end
+    end)
+    
+    return controlGui
+end
+
+-- ================= СОЗДАНИЕ WARNING GUI (также в углу) =================
+local function createWarningGUI()
+    if warnGui then warnGui:Destroy() end
+    
+    local playerGui = LocalPlayer:WaitForChild("PlayerGui")
+    warnGui = Instance.new("ScreenGui", playerGui)
+    warnGui.Name = "MonsterWarningGui"
+    warnGui.ResetOnSpawn = false
+    warnGui.IgnoreGuiInset = true
+    
+    local warnLabel = Instance.new("TextLabel", warnGui)
+    warnLabel.Size = UDim2.new(0.4, 0, 0.06, 0) -- Уменьшил размер для угла
+    warnLabel.Position = UDim2.new(0.02, 0, 0.02, 0) -- Левый верхний угол
+    warnLabel.BackgroundColor3 = Color3.fromRGB(140, 40, 40)
+    warnLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    warnLabel.TextScaled = true
+    warnLabel.Font = Enum.Font.FredokaOne
+    warnLabel.Text = WARNING_TEXT
+    warnLabel.Visible = false
+    warnLabel.BorderSizePixel = 0
+    
+    local corner = Instance.new("UICorner", warnLabel)
+    corner.CornerRadius = UDim.new(0, 14)
+    
+    -- Автоматический перенос текста
+    warnLabel.TextWrapped = true
+    
+    return warnLabel
+end
+
+-- ================= УВЕДОМЛЕНИЯ =================
+local function notify(text)
+    pcall(function()
+        StarterGui:SetCore("SendNotification", {
+            Title = "Warning",
+            Text = text,
+            Duration = 2
+        })
+    end)
+end
+
+-- ================= ПОИСК LOCATION =================
+local function findAllLocations()
+    local locations = {}
+    local descendants = Workspace:GetDescendants()
+    
+    for i = 1, MAX_LOCATIONS do
+        local targetName = "location" .. i
+        
+        for _, obj in ipairs(descendants) do
+            if string.lower(obj.Name) == targetName and obj:IsA("BasePart") then
+                table.insert(locations, obj)
+                break
+            end
+        end
+    end
+    
+    return locations
+end
+
+-- ================= ВСПОМОГАТЕЛЬНЫЕ =================
+local function getHRP()
+    if not LocalPlayer.Character then return nil end
+    return LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+end
+
+local function getTargetCFrame(obj)
+    return obj.CFrame + Vector3.new(0, obj.Size.Y / 2 + 3, 0)
+end
+
+local function isBigTorso(torso)
+    local s = torso.Size
+    return math.abs(s.X - TARGET_TORSO_SIZE.X) <= SIZE_TOLERANCE
+        and math.abs(s.Y - TARGET_TORSO_SIZE.Y) <= SIZE_TOLERANCE
+        and math.abs(s.Z - TARGET_TORSO_SIZE.Z) <= SIZE_TOLERANCE
+end
+
+-- ================= ПОИСК БОЛЬШИХ ИГРОКОВ =================
+local function getAllBigPlayers()
+    local list = {}
+    
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr ~= LocalPlayer and plr.Character then
+            local torso = plr.Character:FindFirstChild("Torso")
+                or plr.Character:FindFirstChild("UpperTorso")
+            
+            if torso and isBigTorso(torso) then
+                table.insert(list, torso)
+            end
+        end
+    end
+    
+    return list
+end
+
+-- ================= ТЕЛЕПОРТ =================
+local lastTeleport = 0
+
+local function teleportToRandomLocation()
+    if tick() - lastTeleport < 2 then return end
+    lastTeleport = tick()
+    
+    local hrp = getHRP()
+    if not hrp then return end
+    
+    local locations = findAllLocations()
+    if #locations == 0 then
+        notify("Locations not found!")
+        return
+    end
+    
+    local randomLocation = locations[math.random(1, #locations)]
+    hrp.CFrame = getTargetCFrame(randomLocation)
+end
+
+-- ================= ИНИЦИАЛИЗАЦИЯ =================
+local function initialize()
+    if not active then return end
+    
+    -- Создаем GUI
+    local warnLabel = createWarningGUI()
+    createControlGUI()
+    
+    -- ГЛАВНЫЙ ЦИКЛ
+    connection = RunService.Heartbeat:Connect(function()
+        if not active then return end
+        
+        local hrp = getHRP()
+        if not hrp then return end
+        
+        local bigPlayers = getAllBigPlayers()
+        
+        if #bigPlayers >= 1 then
+            local closestTorso = nil
+            local closestDist = math.huge
+            
+            for _, torso in ipairs(bigPlayers) do
+                local dist = (hrp.Position - torso.Position).Magnitude
+                if dist < closestDist then
+                    closestDist = dist
+                    closestTorso = torso
+                end
+            end
+            
+            if closestTorso then
+                if closestDist <= WARNING_DISTANCE then
+                    warnLabel.Visible = true
+                else
+                    warnLabel.Visible = false
+                end
+                
+                if closestDist <= DANGER_DISTANCE and teleportEnabled then
+                    teleportToRandomLocation()
+                end
+            end
+        else
+            warnLabel.Visible = false
+        end
+    end)
+    
+    notify("Script loaded! Teleport is OFF by default.")
+end
+
+-- Запускаем скрипт
+initialize()
+
+-- Автоматическое восстановление при смерти/респавне
+LocalPlayer.CharacterAdded:Connect(function()
+    if active then
+        task.wait(1) -- Ждем загрузку персонажа
+        initialize()
+    end
+end)
+--turbo.b.y.hub
+    end
+})
+
+local Input = PlayerTab:Input({
+    Title = "Input",
+    Desc = "Input ",
+    Value = "16",
+    InputIcon = "bird",
+    Type = "Input", -- or "Textarea"
+    Placeholder = "Enter number...",
+    Callback = function(input) getgenv().Enabled = true -- change to false then execute again to turn off
+getgenv().Speed = input -- change speed to the number you want
+loadstring(game:HttpGet("https://raw.githubusercontent.com/eclipsology/SimpleSpeed/main/SimpleSpeed.lua"))()
+        print("text entered: " .. input)
+    end
+})
+
+local EspTv = TvTab:Button({
+    Title = "Load tv esp (no chat)"  
+    Desc = "Test Button"
+    Locked = false,
+    Callback = function()
+        -- Оптимизированный ESP для TV моделей с GUI
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer or Players.PlayerAdded:Wait()
+
+-- Ждем загрузки игрока
+while not LocalPlayer do
+    wait()
+    LocalPlayer = Players.LocalPlayer
+end
+
+-- Создаем ScreenGui для GUI элементов
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "TVESP_GUI"
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Parent = game:GetService("CoreGui")
+
+-- Контейнер для кнопок
+local ButtonContainer = Instance.new("Frame")
+ButtonContainer.Name = "ButtonContainer"
+ButtonContainer.Size = UDim2.new(0, 100, 0, 70)
+ButtonContainer.Position = UDim2.new(1, -110, 0, 10)
+ButtonContainer.BackgroundTransparency = 1
+ButtonContainer.Parent = ScreenGui
+
+local TVESP = {
+    Active = false,
+    Connections = {},
+    Highlighted = {},
+    ScanInterval = 5,
+    LastScan = 0,
+    Colors = {
+        TV = Color3.fromRGB(0, 120, 255),
+        VHS = Color3.fromRGB(255, 50, 50),
+        Machine = Color3.fromRGB(0, 200, 100)
+    },
+    ScreenGui = ScreenGui,
+    ButtonContainer = ButtonContainer
+}
+
+-- Функция создания кнопок
+local function createButton(name, text, color)
+    local button = Instance.new("TextButton")
+    button.Name = name
+    button.Size = UDim2.new(1, 0, 0, 30)
+    button.BackgroundColor3 = color
+    button.Text = text
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.Font = Enum.Font.GothamBold
+    button.TextSize = 14
+    button.BorderSizePixel = 0
+    
+    -- Стилизация
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 6)
+    corner.Parent = button
+    
+    return button
+end
+
+-- Кнопка включения/выключения ESP
+local ESPButton = createButton("ESPButton", "TV ESP: OFF", Color3.fromRGB(40, 40, 40))
+ESPButton.Parent = ButtonContainer
+
+-- Кнопка удаления скрипта
+local RemoveButton = createButton("RemoveButton", "REMOVE", Color3.fromRGB(220, 60, 60))
+RemoveButton.Position = UDim2.new(0, 0, 0, 35)
+RemoveButton.Parent = ButtonContainer
+
+-- Функция обновления текста кнопки ESP
+local function updateESPButtonText()
+    if TVESP.Active then
+        ESPButton.Text = "TV ESP: ON"
+        ESPButton.BackgroundColor3 = Color3.fromRGB(60, 180, 80)
+    else
+        ESPButton.Text = "TV ESP: OFF"
+        ESPButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    end
+end
+
+-- Обработчик нажатия кнопки ESP
+ESPButton.MouseButton1Click:Connect(function()
+    if TVESP.Active then
+        TVESP.Stop()
+    else
+        TVESP.Start()
+    end
+    updateESPButtonText()
+end)
+
+-- Обработчик нажатия кнопки удаления
+RemoveButton.MouseButton1Click:Connect(function()
+    TVESP.Remove()
+end)
+
+-- Безопасная функция создания подсветки
+local function createHighlight(model, color)
+    local highlight = Instance.new("Highlight")
+    highlight.Name = "TVESP_Highlight_" .. tostring(math.random(10000, 99999))
+    highlight.Adornee = model
+    highlight.FillColor = color
+    highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+    highlight.FillTransparency = 0.3
+    highlight.OutlineTransparency = 0
+    highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    highlight.Parent = ScreenGui
+    return highlight
+end
+
+-- Функция определения типа модели
+local function getModelType(modelName)
+    local name = modelName:lower()
+    
+    if name:find("vhs") then
+        return "vhs"
+    elseif name:find("machine") or name:find("device") then
+        return "machine"
+    elseif name:find("tv") or name:find("television") or name:find("screen") then
+        return "tv"
+    end
+    
+    return nil
+end
+
+-- Функция подсветки модели
+local function highlightModel(model)
+    if not model or not model:IsA("Model") then return false end
+    if TVESP.Highlighted[model] then return true end
+    
+    local modelType = getModelType(model.Name)
+    if not modelType then return false end
+    
+    local color = TVESP.Colors[modelType:gsub("^%l", string.upper)] or TVESP.Colors.TV
+    
+    local success, result = pcall(function()
+        local highlight = createHighlight(model, color)
+        
+        TVESP.Highlighted[model] = {
+            highlight = highlight,
+            model = model,
+            type = modelType
+        }
+        
+        -- Очистка при удалении модели
+        model.Destroying:Connect(function()
+            if highlight and highlight.Parent then
+                highlight:Destroy()
+            end
+            TVESP.Highlighted[model] = nil
+        end)
+        
+        return true
+    end)
+    
+    if not success then
+        warn("[TV ESP] Ошибка подсветки модели: " .. tostring(result))
+    end
+    
+    return success
+end
+
+-- Поиск TV моделей
+local function findTVModels()
+    if not TVESP.Active then return end
+    
+    local found = {tv = 0, vhs = 0, machine = 0, total = 0}
+    
+    -- Поиск в рабочих папках
+    local searchFolders = {
+        workspace,
+        workspace:FindFirstChild("Machines"),
+        workspace:FindFirstChild("Map"),
+        workspace:FindFirstChild("Working"),
+        workspace:FindFirstChild("TVs"),
+        workspace:FindFirstChild("Electronics")
+    }
+    
+    for _, folder in pairs(searchFolders) do
+        if folder then
+            for _, item in pairs(folder:GetDescendants()) do
+                if item:IsA("Model") and not TVESP.Highlighted[item] then
+                    local modelType = getModelType(item.Name)
+                    if modelType then
+                        if highlightModel(item) then
+                            found[modelType] = found[modelType] + 1
+                            found.total = found.total + 1
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    -- Отчет
+    if found.total > 0 then
+        print(string.format(
+            "[TV ESP] Found: %d (TV: %d, VHS: %d, Machines: %d)",
+            found.total, found.tv, found.vhs, found.machine
+        ))
+    end
+    
+    return found
+end
+
+-- Очистка подсветок
+local function clearHighlights()
+    for model, data in pairs(TVESP.Highlighted) do
+        if data.highlight and data.highlight.Parent then
+            data.highlight:Destroy()
+        end
+    end
+    TVESP.Highlighted = {}
+end
+
+-- Запуск ESP
+function TVESP.Start()
+    if TVESP.Active then return end
+    
+    TVESP.Active = true
+    clearHighlights()
+    
+    print("[TV ESP] Starting...")
+    updateESPButtonText()
+    
+    -- Первоначальное сканирование
+    task.spawn(function()
+        task.wait(2)
+        findTVModels()
+    end)
+    
+    -- Периодическое сканирование
+    local connection
+    connection = RunService.Heartbeat:Connect(function()
+        if not TVESP.Active then
+            connection:Disconnect()
+            return
+        end
+        
+        local currentTime = tick()
+        if currentTime - TVESP.LastScan >= TVESP.ScanInterval then
+            TVESP.LastScan = currentTime
+            task.spawn(findTVModels)
+        end
+    end)
+    
+    table.insert(TVESP.Connections, connection)
+    
+    -- Слушатель новых объектов
+    local descendantConnection
+    descendantConnection = workspace.DescendantAdded:Connect(function(descendant)
+        if not TVESP.Active then return end
+        
+        if descendant:IsA("Model") then
+            task.wait(0.2)
+            local modelType = getModelType(descendant.Name)
+            if modelType then
+                highlightModel(descendant)
+            end
+        end
+    end)
+    
+    table.insert(TVESP.Connections, descendantConnection)
+    
+    print("[TV ESP] Activated!")
+end
+
+-- Остановка ESP
+function TVESP.Stop()
+    if not TVESP.Active then return end
+    
+    TVESP.Active = false
+    
+    -- Отключаем все соединения
+    for _, connection in pairs(TVESP.Connections) do
+        if connection then
+            pcall(function() connection:Disconnect() end)
+        end
+    end
+    TVESP.Connections = {}
+    
+    -- Очищаем подсветки
+    clearHighlights()
+    
+    print("[TV ESP] Stopped")
+    updateESPButtonText()
+end
+
+-- Полное удаление скрипта
+function TVESP.Remove()
+    print("[TV ESP] Removing script...")
+    
+    -- Останавливаем ESP если активен
+    if TVESP.Active then
+        TVESP.Stop()
+    end
+    
+    -- Отключаем все соединения
+    for _, connection in pairs(TVESP.Connections) do
+        if connection then
+            pcall(function() connection:Disconnect() end)
+        end
+    end
+    
+    -- Очищаем подсветки
+    clearHighlights()
+    
+    -- Удаляем GUI
+    if TVESP.ScreenGui and TVESP.ScreenGui.Parent then
+        TVESP.ScreenGui:Destroy()
+    end
+    
+    -- Удаляем глобальные функции
+    _G.TVESP = nil
+    
+    print("[TV ESP] Script removed!")
+    
+    -- Останавливаем выполнение скрипта
+    script:Destroy()
+end
+
+-- Получение статуса
+function TVESP.Status()
+    local counts = {tv = 0, vhs = 0, machine = 0}
+    
+    for _, data in pairs(TVESP.Highlighted) do
+        if data.type and counts[data.type] then
+            counts[data.type] = counts[data.type] + 1
+        end
+    end
+    
+    local total = counts.tv + counts.vhs + counts.machine
+    
+    return {
+        Active = TVESP.Active,
+        Total = total,
+        TV = counts.tv,
+        VHS = counts.vhs,
+        Machines = counts.machine,
+        ScanInterval = TVESP.ScanInterval
+    }
+end
+
+-- Дополнительные функции
+function TVESP.UpdateInterval(seconds)
+    if seconds >= 2 and seconds <= 30 then
+        TVESP.ScanInterval = seconds
+        return "Interval set to: " .. seconds .. " sec"
+    end
+    return "Interval must be 2-30 seconds"
+end
+
+TVESP.Scan = findTVModels
+TVESP.Clear = clearHighlights
+
+-- Экспорт функций в глобальную область
+_G.TVESP = TVESP
+
+-- Сообщение о загрузке
+print("=================================")
+print("TV ESP Loaded!")
+print("Two buttons added to top-right corner")
+print("=================================")
+
+-- Автообновление кнопки
+updateESPButtonText()
+
+return TVESP
+    end
+})
+
+local v932 = ExtraTab:Button({
+    Title = "infinite yield",    
+    Desc = "Test Button",
+    Locked = false,
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end
+})
+
+local Butt5on = Tab:Button({
+    Title = "Auto fix tv(optimization)",    
+    Desc = "Test Button",
+    Locked = false,
+    Callback = function()
+        local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local RunService = game:GetService("RunService")
+
+-- UI КОНТРОЛЛЕР
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "GhostSystem"
+ScreenGui.Parent = PlayerGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+-- Основной контейнер для кнопок (правый верхний угол)
+local Container = Instance.new("Frame")
+Container.Name = "Container"
+Container.Size = UDim2.new(0, 200, 0, 120)
+Container.Position = UDim2.new(1, -210, 0, 10)
+Container.BackgroundTransparency = 1
+Container.Parent = ScreenGui
+
+-- Основная кнопка Ghost
+local MainBtn = Instance.new("TextButton")
+MainBtn.Name = "MainBtn"
+MainBtn.Size = UDim2.new(1, 0, 0, 40)
+MainBtn.Position = UDim2.new(0, 0, 0, 0)
+MainBtn.Text = "ULTIMATE GHOST: OFF"
+MainBtn.BackgroundColor3 = Color3.new(0, 0, 0)
+MainBtn.TextColor3 = Color3.new(1, 1, 0)
+MainBtn.Font = Enum.Font.GothamBold
+MainBtn.TextSize = 14
+MainBtn.Parent = Container
+
+-- Кнопка удаления
+local RemoveBtn = Instance.new("TextButton")
+RemoveBtn.Name = "RemoveBtn"
+RemoveBtn.Size = UDim2.new(1, 0, 0, 40)
+RemoveBtn.Position = UDim2.new(0, 0, 0, 45)
+RemoveBtn.Text = "REMOVE SCRIPT"
+RemoveBtn.BackgroundColor3 = Color3.new(0.8, 0.2, 0.2)
+RemoveBtn.TextColor3 = Color3.new(1, 1, 1)
+RemoveBtn.Font = Enum.Font.GothamBold
+RemoveBtn.TextSize = 14
+RemoveBtn.Parent = Container
+
+-- Добавляем скругления
+for _, btn in pairs({MainBtn, RemoveBtn}) do
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 8)
+    corner.Parent = btn
+end
+
+local ACTIVE = false
+local FRAME_SKIP = 2 -- Пропускаем каждый 2-й кадр для оптимизации
+local frameCounter = 0
+
+-- ПОЛНАЯ ФУНКЦИЯ АКТИВАЦИИ С GETCONNECTIONS
+local function FastActivate(btn)
+    if not btn or not btn:IsA("GuiButton") then return end
+    
+    -- Пытаемся вызвать все возможные сигналы нажатия
+    local signals = {"Activated", "MouseButton1Click", "MouseButton1Down", "MouseButton1Up", "TouchTap"}
+    
+    -- Используем getconnections если доступно
+    if getconnections then
+        for _, signalName in pairs(signals) do
+            local signal = btn[signalName]
+            if signal then
+                pcall(function()
+                    for _, connection in pairs(getconnections(signal)) do
+                        if connection and connection.Function then
+                            pcall(connection.Function)
+                        end
+                    end
+                end)
+            end
+        end
+    else
+        -- Альтернатива если getconnections недоступен
+        for _, signalName in pairs(signals) do
+            local signal = btn[signalName]
+            if signal then
+                pcall(function()
+                    signal:Fire()
+                end)
+            end
+        end
+    end
+    
+    -- Дополнительная активация для ImageButton
+    if btn:IsA("ImageButton") then
+        pcall(function()
+            local mouseClick = btn.MouseButton1Click
+            if mouseClick then
+                mouseClick:Fire()
+            end
+        end)
+    end
+end
+
+-- Оптимизированный поиск кнопок
+local function findTargetButtons()
+    local foundButtons = {}
+    
+    -- Быстрый поиск по известным именам
+    local targetNames = {"GoldNoCoin", "Template", "Empty"}
+    local targetImageIDs = {"768336794666"}  -- ID изображения
+    
+    -- Ищем во всем PlayerGui
+    for _, guiObject in pairs(PlayerGui:GetDescendants()) do
+        if guiObject:IsA("GuiButton") and guiObject.Visible then
+            -- Проверяем по имени
+            for _, name in pairs(targetNames) do
+                if guiObject.Name == name then
+                    table.insert(foundButtons, guiObject)
+                    break
+                end
+            end
+            
+            -- Проверяем ImageButton по ID изображения
+            if guiObject:IsA("ImageButton") then
+                local image = tostring(guiObject.Image)
+                for _, id in pairs(targetImageIDs) do
+                    if string.find(image, id) then
+                        table.insert(foundButtons, guiObject)
+                        break
+                    end
+                end
+            end
+        end
+    end
+    
+    return foundButtons
+end
+
+-- Кэш для найденных кнопок
+local buttonCache = {}
+local lastCacheUpdate = 0
+local CACHE_UPDATE_INTERVAL = 1 -- Обновляем кэш каждую секунду
+
+-- Функция обновления кэша кнопок
+local function updateButtonCache()
+    local currentTime = tick()
+    
+    -- Обновляем кэш только если прошло достаточно времени
+    if currentTime - lastCacheUpdate < CACHE_UPDATE_INTERVAL then
+        return buttonCache
+    end
+    
+    lastCacheUpdate = currentTime
+    
+    -- Находим новые кнопки
+    local newButtons = findTargetButtons()
+    
+    -- Объединяем старый и новый кэш
+    local tempCache = {}
+    local seen = {}
+    
+    -- Добавляем старые кнопки, которые всё еще существуют
+    for _, btn in pairs(buttonCache) do
+        if btn and btn.Parent and btn.Visible then
+            local key = tostring(btn)
+            if not seen[key] then
+                table.insert(tempCache, btn)
+                seen[key] = true
+            end
+        end
+    end
+    
+    -- Добавляем новые кнопки
+    for _, btn in pairs(newButtons) do
+        if btn and btn.Parent and btn.Visible then
+            local key = tostring(btn)
+            if not seen[key] then
+                table.insert(tempCache, btn)
+                seen[key] = true
+            end
+        end
+    end
+    
+    buttonCache = tempCache
+    
+    -- Логируем количество найденных кнопок
+    if ACTIVE and #buttonCache > 0 then
+        print("[Ghost System] Found " .. #buttonCache .. " target buttons")
+    end
+    
+    return buttonCache
+end
+
+-- Основной цикл с оптимизацией
+local connection = RunService.RenderStepped:Connect(function()
+    if not ACTIVE then return end
+    
+    frameCounter = frameCounter + 1
+    
+    -- Пропускаем кадры для оптимизации
+    if frameCounter % FRAME_SKIP ~= 0 then
+        return
+    end
+    
+    -- Обновляем кэш только если активно
+    local buttons = updateButtonCache()
+    
+    -- Обрабатываем все кнопки из кэша
+    for _, btn in pairs(buttons) do
+        if btn and btn.Parent and btn.Visible then
+            FastActivate(btn)
+        end
+    end
+end)
+
+-- Основная кнопка активации
+MainBtn.MouseButton1Click:Connect(function()
+    ACTIVE = not ACTIVE
+    
+    if ACTIVE then
+        MainBtn.Text = "GHOST: WORKING 🔥"
+        MainBtn.TextColor3 = Color3.new(0, 1, 0)
+        MainBtn.BackgroundColor3 = Color3.new(0, 0.4, 0)
+        
+        -- Сразу обновляем кэш при активации
+        updateButtonCache()
+        print("[Ghost System] Activated")
+    else
+        MainBtn.Text = "ULTIMATE GHOST: OFF"
+        MainBtn.TextColor3 = Color3.new(1, 1, 0)
+        MainBtn.BackgroundColor3 = Color3.new(0, 0, 0)
+        
+        -- Очищаем кэш при деактивации
+        buttonCache = {}
+        print("[Ghost System] Deactivated")
+    end
+end)
+
+-- Кнопка удаления скрипта
+RemoveBtn.MouseButton1Click:Connect(function()
+    -- Деактивируем скрипт
+    ACTIVE = false
+    
+    -- Отключаем все соединения
+    if connection then
+        connection:Disconnect()
+    end
+    
+    -- Очищаем кэш
+    buttonCache = {}
+    
+    -- Удаляем GUI
+    ScreenGui:Destroy()
+    
+    print("[Ghost System] Removed")
+end)
+
+-- Автоматическое обновление кэша в фоне
+task.spawn(function()
+    while ScreenGui and ScreenGui.Parent do
+        if ACTIVE then
+            updateButtonCache()
+        end
+        wait(CACHE_UPDATE_INTERVAL)
+    end
+end)
+
+-- Уведомление о загрузке
+print("=================================")
+print("ULTIMATE GHOST SYSTEM LOADED!")
+print("Buttons in top-right corner")
+print("=================================")
+    end
+})
+
+
+
